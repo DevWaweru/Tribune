@@ -8,6 +8,10 @@
 
 <nav class="navbar navbar-dark bg-dark justify-content-between">
     <a class="navbar-brand" href="{% url 'newsToday' %}">The Moringa Tribune</a>
+    <form class="form-inline" role="search" action="{% url 'search_results' %}">
+      <input class="form-control mr-sm-2" name="article" type="search" placeholder="Search articles" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
 
 </body>

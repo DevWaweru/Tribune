@@ -1,0 +1,27 @@
+{% extends 'all-news/base.html' %}
+
+{% block content %}
+<div class="container single-article">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1> {{article.title}} </h1>
+            <p>Posted on: {{article.pub_date|timesince}} ago by: {{article.editor.first_name}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <img src="{{article.article_image.url}}" alt="image" class="img-responsive">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <p> {{article.post}} </p>
+            <p class="small"> Tags: 
+                {% for tag in article.tags.all %}
+                {{tag}},
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

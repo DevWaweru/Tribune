@@ -3,7 +3,7 @@ import datetime as dt
 
 # Create your models here.
 class Editor(models.Model):
-    first_name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
     phone_number = models.CharField(max_length=30, blank=True)
@@ -29,6 +29,7 @@ class Article(models.Model):
     editor = models.ForeignKey(Editor)
     tags = models.ManyToManyField(Tag)
     pub_date = models.DateTimeField(auto_now_add=True)
+    article_image = models.ImageField(upload_to = 'articles/', default='Image')
 
     @classmethod
     def today_news(cls):
@@ -39,4 +40,9 @@ class Article(models.Model):
     @classmethod
     def days_news(cls,date):
         news = cls.objects.filter(pub_date__date = date)
+        return news
+    
+    @classmethod
+    def search_by_title(cls,search_term):
+        news = cls.objects.filter(title__icontains=search_term)
         return news

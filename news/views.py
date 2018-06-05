@@ -11,7 +11,8 @@ def welcome(request):
 def news_of_day(request):
     date = dt.date.today()
     news = Article.today_news()
-    print(news[1].tags.all())
+    # print(news[1].tags.all())
+    news.reverse()
     # Function to convert date object to find the exact day
     # day = convert_dates(date)
     # html = f'''
@@ -56,3 +57,21 @@ def past_days_news(request,past_date):
 
     news = Article.days_news(date)
     return render(request, 'all-news/past-news.html',{'date':date, 'news':news}) 
+
+def search_results(request):
+    if 'article' in request.GET and request.GET['article']:
+        search_term = request.GET.get('article')
+        searched_articles = Article.search_by_title(search_term)
+        message = (f'{search_term}')
+
+        return render(request, 'all-news/search.html',{'message':message, 'articles':searched_articles})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-news/search.html',{'message':message})
+
+def article(request,article_id):
+    try:
+        article = Article.objects.get(id=article_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request, 'all-news/article.html', {'article':article})
