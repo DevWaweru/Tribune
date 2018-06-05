@@ -1,0 +1,26 @@
+{% extends 'all-news/base.html' %}
+
+{% block content %}
+{{block.super}}
+<div class="container">
+    <div class="row display-news">
+        <!-- Loop through news -->
+        {% for news_item in news %}
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h2> {{news_item.title}} </h2>
+            <p> {{news_item.post}} </p>
+                {% for tag in news_item.tags.all %}
+                <p class="small"> {{tag}} </p>
+                {% endfor %}
+            <p> {{news_item.editor}} </p>
+            <p class="small"> {{news_item.pub_date}} </p>
+        </div>
+        {% empty %}
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h2> No Articles today </h2>
+        </div>
+        {% endfor %}        
+    </div>
+</div>
+{% endblock %}
+
