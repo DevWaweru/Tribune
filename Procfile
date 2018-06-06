@@ -1,0 +1,1 @@
+web: gunicorn Moringa-tribune(tribune).wsgi
