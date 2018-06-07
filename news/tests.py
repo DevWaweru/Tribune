@@ -25,7 +25,7 @@ class ArticleTestClass(TestCase):
         self.richard.save_editor()
 
         # Creating a new tag and saving it
-        self.new_tag = tags(name='testing')
+        self.new_tag = Tag(name='testing')
         self.new_tag.save()
 
         self.new_article = Article(title='Test Article', post = 'This is a random test post', editor=self.richard)
@@ -35,7 +35,7 @@ class ArticleTestClass(TestCase):
     
     def tearDown(self):
         Editor.objects.all().delete()
-        tags.objects.all().delete()
+        Tag.objects.all().delete()
         Article.objects.all().delete()
     
     def test_get_news_today(self):

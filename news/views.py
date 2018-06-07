@@ -11,18 +11,7 @@ def welcome(request):
 def news_of_day(request):
     date = dt.date.today()
     news = Article.today_news()
-    # print(news[1].tags.all())
     news.reverse()
-    # Function to convert date object to find the exact day
-    # day = convert_dates(date)
-    # html = f'''
-    # <html>
-    #     <body>
-    #         <h3>News for {day} {date.day}-{date.month}-{date.year}</h3>
-    #     </body>
-    # </html>
-    # '''
-    # return HttpResponse(html)
     return render(request, 'all-news/today-news.html',{'date':date, 'news':news})
 
 def convert_dates(dates):
@@ -42,16 +31,7 @@ def past_days_news(request,past_date):
         # Raise 404 error when ValueError is thrown
         raise Http404()
         assert False
-    
-    # day = convert_dates(date)
-    # html = f'''
-    # <html>
-    #     <body>
-    #         <h3>News for {day} {date.day}-{date.month}-{date.year}</h3>
-    #     </body>
-    # </html>
-    # '''
-    # return HttpResponse(html)
+        
     if date == dt.date.today():
         return redirect(news_of_day)
 
