@@ -5,13 +5,14 @@ from .models import Article
 
 # Create your views here.
 def welcome(request):
-    # return HttpResponse('Welcome to the Moringa Tribune')
+    
     return render(request,'all-news/welcome.html')
 
 def news_of_day(request):
     date = dt.date.today()
     news = Article.today_news()
     news.reverse()
+
     return render(request, 'all-news/today-news.html',{'date':date, 'news':news})
 
 def convert_dates(dates):
