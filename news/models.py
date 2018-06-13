@@ -49,4 +49,4 @@ class Article(models.Model):
     
 class NewsLetterRecepients(models.Model):
     name = models.CharField(max_length=30)
-    email = models.Email()
+    email = models.EmailField()

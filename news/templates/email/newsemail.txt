@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to the Tribune. You will find the most exciting news here!
