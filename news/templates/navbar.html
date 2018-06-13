@@ -1,18 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-
 <nav class="navbar navbar-dark bg-dark justify-content-between">
-    <a class="navbar-brand" href="{% url 'newsToday' %}">The Moringa Tribune</a>
-    <form class="form-inline" role="search" action="{% url 'search_results' %}">
-      <input class="form-control mr-sm-2" name="article" type="search" placeholder="Search articles" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-</nav>
+  <a class="navbar-brand" href="{% url 'newsToday' %}">The Moringa Tribune</a>
+    {% if user.is_authenticated %}
+    <ul>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="{%url 'newsToday'%}">Home</a>
+          </li>
+          <li>
+            <a href="/accounts/password/change">Change Password</a>
+          </li>
+          <li>
+            <a href="/logout">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    {% else %}
+    <li>
+      <a class='btn btn-default' href="/accounts/login">Login</a>
+    </li>
 
-</body>
-</html>
+    {% endif %}
+
+  <form class="form-inline" role="search" action="{% url 'search_results' %}">
+    <input class="form-control mr-sm-2" name="article" type="search" placeholder="Search articles" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>

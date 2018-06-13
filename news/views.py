@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 import datetime as dt
 from .models import Article, NewsLetterRecepients
 from .forms import NewsLetterForm
 from .email import send_welcome_email
-
 
 # Create your views here.
 def welcome(request):
@@ -56,6 +56,7 @@ def past_days_news(request,past_date):
     news = Article.days_news(date)
     return render(request, 'all-news/past-news.html',{'date':date, 'news':news}) 
 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'article' in request.GET and request.GET['article']:
         search_term = request.GET.get('article')
@@ -67,6 +68,7 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-news/search.html',{'message':message})
 
+@login_required(login_url='/accounts/login/')
 def article(request,article_id):
     try:
         article = Article.objects.get(id=article_id)
