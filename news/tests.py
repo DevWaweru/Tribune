@@ -1,22 +1,22 @@
 from django.test import TestCase
-from .models import Editor, Article, Tag
+from .models import Article, Tag
 import datetime as dt
 # Create your tests here.
-class EditorTestClass(TestCase):
+# class EditorTestClass(TestCase):
 
-    # Set up method
-    def setUp(self):
-        self.richard= Editor(first_name = 'Richard', last_name ='Waweru', email ='example@abc.com')
+#     # Set up method
+#     def setUp(self):
+#         self.richard= Editor(first_name = 'Richard', last_name ='Waweru', email ='example@abc.com')
     
-    # Testing  instance
-    def test_instance(self):
-        self.assertTrue(isinstance(self.richard,Editor))
+#     # Testing  instance
+#     def test_instance(self):
+#         self.assertTrue(isinstance(self.richard,Editor))
     
-    # Testing Save Method
-    def test_save_method(self):
-        self.richard.save_editor()
-        editors = Editor.objects.all()
-        self.assertTrue(len(editors) > 0)
+#     # Testing Save Method
+#     def test_save_method(self):
+#         self.richard.save_editor()
+#         editors = Editor.objects.all()
+#         self.assertTrue(len(editors) > 0)
     
 class ArticleTestClass(TestCase):
     def setUp(self):

@@ -1,33 +1,32 @@
-<nav class="navbar navbar-dark bg-dark justify-content-between">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="{% url 'newsToday' %}">The Moringa Tribune</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     {% if user.is_authenticated %}
-    <ul>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-          <span class="caret"></span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          {{user|title}}
         </a>
-        <ul class="dropdown-menu" role="menu">
-          <li>
-            <a href="{%url 'newsToday'%}">Home</a>
-          </li>
-          <li>
-            <a href="/accounts/password/change">Change Password</a>
-          </li>
-          <li>
-            <a href="/logout">Logout</a>
-          </li>
-        </ul>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{%url 'newsToday'%}">Home</a>
+          <a class="dropdown-item" href="{%url 'new_article'%}">Create Article</a>
+          <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
       </li>
     </ul>
     {% else %}
-    <li>
-      <a class='btn btn-default' href="/accounts/login">Login</a>
-    </li>
-
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login">Login</a>
+      </li>
+    </ul>
     {% endif %}
-
-  <form class="form-inline" role="search" action="{% url 'search_results' %}">
-    <input class="form-control mr-sm-2" name="article" type="search" placeholder="Search articles" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
+    <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'search_results' %}">
+      <input class="form-control mr-sm-2" name="article" type="search" placeholder="Search articles" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
 </nav>

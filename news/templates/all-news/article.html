@@ -15,7 +15,9 @@
     </div>
     <div class="row">
         <div class="col-md-10">
-            <p> {{article.post}} </p>
+            {% autoescape %}
+            <p> {{article.post|safe}} </p>
+            {% endautoescape %}
             <p class="small"> Tags: 
                 {% for tag in article.tags.all %}
                 {{tag}},
