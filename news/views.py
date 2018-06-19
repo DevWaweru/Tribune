@@ -26,7 +26,7 @@ def news_of_day(request):
             recepient.save()
 
             send_welcome_email(name,email)
-            HttpResponseRedirect('news_of_day')
+            HttpResponseRedirect('newsToday')
     else:
         form = NewsLetterForm()
     
@@ -72,6 +72,7 @@ def search_results(request):
 def article(request,article_id):
     try:
         article = Article.objects.get(id=article_id)
+        print(article.tags.all())
     except DoesNotExist:
         raise Http404()
     return render(request, 'all-news/article.html', {'article':article})
@@ -79,12 +80,12 @@ def article(request,article_id):
 @login_required(login_url='/accounts/login/')
 def new_article(request):
     current_user = request.user
-    print(current_user)
     if request.method == 'POST':
         form = NewsArticleForm(request.POST, request.FILES)
         if form.is_valid():
             article = form.save(commit=False)
             article.editor = current_user
+            print(article.post)
             article.save()
     else:
         form = NewsArticleForm()

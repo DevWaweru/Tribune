@@ -7,20 +7,22 @@
         <!-- Loop through news -->
         {% for news_item in news %}
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 articles-home">
-            {% if news_item.article_image.url %}
+            {% if news_item.article_image %}
             <img src="{{news_item.article_image.url}}" class="img-responsive" alt="Image">
             {% else %}
             <p></p>
             {% endif %}
             <h2> {{news_item.title}} </h2>
             <hr>
-            <p> {{news_item.post|truncatechars:400}}<a href="/article/{{news_item.id}}" class="btn btn-link">Read more</a></p>
-                <p class="small"> Tags:
-                    {% for tag in news_item.tags.all %}
-                    {{tag}} 
-                    {% endfor %}
-                </p>
-            <p> {{news_item.editor}} </p>
+            {% autoescape on %}
+            <p> {{news_item.post|safe|truncatechars:400}}<a href="/article/{{news_item.id}}" class="btn btn-link">Read more</a></p>
+            {% endautoescape %}
+            <p class="small"> Tags:
+                {% for tag in news_item.tags.all %}
+                {{tag}} 
+                {% endfor %}
+            </p>
+            <p> {{news_item.editor|title}} </p>
             <p class="small">Posted on: {{news_item.pub_date}} </p>
         </div>
         {% empty %}

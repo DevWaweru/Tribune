@@ -7,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>New Article</title>
-    {{form.media}}
 
     {% block styles %}
         {% bootstrap_css %}
         <link rel="stylesheet" href="{% static 'css/news.css'%}">
     {% endblock %}
+    {{form.media}}
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container">
         <div class="row">
             <div class="col-md-2"></div>

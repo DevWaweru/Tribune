@@ -15,13 +15,15 @@
             {% endif %}
             <h2> {{news_item.title}} </h2>
             <hr>
-            <p> {{news_item.post|truncatechars:400}}<a href="/article/{{news_item.id}}" class="btn btn-link">Read more</a></p>
+            {% autoescape on %}
+            {{news_item.post|safe|truncatechars:400}}<a href="/article/{{news_item.id}}" class="btn btn-link">Read more</a>
+            {% endautoescape %}
                 <p class="small"> Tags:
                     {% for tag in news_item.tags.all %}
                     {{tag}} 
                     {% endfor %}
                 </p>
-            <p> {{news_item.editor}} </p>
+            <p> {{news_item.editor|title}} </p>
             <p class="small">Posted on: {{news_item.pub_date}} </p>
         </div>
         {% empty %}
