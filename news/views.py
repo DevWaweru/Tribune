@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 import datetime as dt
 from .models import Article, NewsLetterRecepients
 from .forms import NewsLetterForm, NewsArticleForm
@@ -16,21 +17,32 @@ def news_of_day(request):
     news = Article.today_news()
     news.reverse()
 
-    if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['first_name']
-            email = form.cleaned_data['email']
-            
-            recepient = NewsLetterRecepients(name=name, email=email)
-            recepient.save()
-
-            send_welcome_email(name,email)
-            HttpResponseRedirect('newsToday')
-    else:
-        form = NewsLetterForm()
+    form = NewsLetterForm()
     
     return render(request, 'all-news/today-news.html',{'date':date, 'news':news, 'letterForm':form})
+
+def newsletter(request):
+    name = request.POST.get('first_name')
+    email = request.POST.get('email')
+    
+    recepients = NewsLetterRecepients(name=name, email=email)
+    recepients.save()
+    send_welcome_email(name,email)
+    data = {'success': 'You have been successfully added to mailing list'}
+    return JsonResponse(data)
+
+    # if request.method == 'POST':
+    #     form = NewsLetterForm(request.POST)
+    #     if form.is_valid():
+    #         name = form.cleaned_data['first_name']
+    #         email = form.cleaned_data['email']
+            
+    #         recepient = NewsLetterRecepients(name=name, email=email)
+    #         recepient.save()
+
+    #         send_welcome_email(name,email)
+    #         HttpResponseRedirect('newsToday')
+    # else:
 
 def convert_dates(dates):
     # Function that gets the weekday number for the date
@@ -91,3 +103,4 @@ def new_article(request):
         form = NewsArticleForm()
     
     return render(request, 'new_article.html',{'form':form})
+
