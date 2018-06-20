@@ -3,9 +3,15 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import datetime as dt
-from .models import Article, NewsLetterRecepients
+from .models import Article, NewsLetterRecepients, MoringaMerch
 from .forms import NewsLetterForm, NewsArticleForm
 from .email import send_welcome_email
+# Api Imports
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .serializer import MerchSerializer
+from .permissions import IsAdminOrReadOnly
 
 # Create your views here.
 def welcome(request):
@@ -104,3 +110,18 @@ def new_article(request):
     
     return render(request, 'new_article.html',{'form':form})
 
+class MerchList(APIView):
+    def get(self, request, format=None):
+        all_merch = MoringaMerch.objects.all()
+        serializers = MerchSerializer(all_merch, many=True)
+        return Response(serializers.data)
+    
+    def post(self, request, format=None):
+        serializers = MerchSerializer(data=request.data)
+
+        permission_classes = (IsAdminOrReadOnly,)
+
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
